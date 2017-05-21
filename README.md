@@ -9,7 +9,7 @@ TODO: Delete this and the text above, and describe your gem
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'common-utils'
+gem 'codecode-common-utils'
 ```
 
 And then execute:
@@ -22,7 +22,7 @@ Or install it yourself as:
 
 ## Usage
 ```ruby
-require 'common-utils'
+require 'codecode-common-utils'
 
 # Create a whatever object
  object = {

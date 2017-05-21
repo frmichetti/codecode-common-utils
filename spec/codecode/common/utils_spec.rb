@@ -4,7 +4,7 @@ RSpec.describe CodeCode::Common::Utils do
 
   it 'has a version number' do
     expect(CodeCode::Common::Utils::VERSION).not_to be nil
-    expect(CodeCode::Common::Utils::VERSION).to eq '0.1.1'
+    expect(CodeCode::Common::Utils::VERSION).to eq '0.1.2'
   end
 
   it 'should convert object with string keys to symbol keys - first level' do
