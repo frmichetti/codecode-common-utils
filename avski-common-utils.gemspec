@@ -1,17 +1,17 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'codecode/common/utils/version'
+require 'avski/common/utils/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'codecode-common-utils'
-  spec.version       = CodeCode::Common::Utils::VERSION
+  spec.name          = 'avski-common-utils'
+  spec.version       = Avski::Common::Utils::VERSION
   spec.authors       = ['Felipe Rodrigues Michetti']
-  spec.email         = ['frmichetti@gmail.com']
+  spec.email         = ['frmichetti@avski.com.br']
 
   spec.summary       = 'A library with most common utilities used in day by day'
   spec.description   = 'Centering my tools'
-  spec.homepage      = 'http://www.codecode.com.br'
+  spec.homepage      = 'http://www.avski.com.br'
   spec.license       = 'MIT'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'

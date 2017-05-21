@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-RSpec.describe CodeCode::Common::Utils do
+RSpec.describe Avski::Common::Utils do
 
   it 'has a version number' do
-    expect(CodeCode::Common::Utils::VERSION).not_to be nil
-    expect(CodeCode::Common::Utils::VERSION).to eq '0.1.2'
+    expect(Avski::Common::Utils::VERSION).not_to be nil
+    expect(Avski::Common::Utils::VERSION).to eq '0.1.2'
   end
 
   it 'should convert object with string keys to symbol keys - first level' do
@@ -15,7 +15,7 @@ RSpec.describe CodeCode::Common::Utils do
         'third_key' => 'third_value'
     }
 
-    object = CodeCode::Common::Utils::Hash.symbolize_keys object
+    object = Avski::Common::Utils::Hash.symbolize_keys object
     object.each{ |key, value|
       expect(key).to be_an_instance_of(Symbol)
       expect(value).to be_an_instance_of(String)
@@ -41,7 +41,7 @@ RSpec.describe CodeCode::Common::Utils do
       object["nested object #{n}"] = other_object
     end
 
-    object = CodeCode::Common::Utils::Hash.symbolize_keys object
+    object = Avski::Common::Utils::Hash.symbolize_keys object
     object.each{ |key, value|
       expect(key).to be_an_instance_of(Symbol)
     }

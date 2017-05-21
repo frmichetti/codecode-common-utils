@@ -1,6 +1,6 @@
-require 'codecode/common/utils/version'
+require 'avski/common/utils/version'
 
-module CodeCode
+module Avski
   module Common
     module Utils
       # Utility methods for Hash manipulation
