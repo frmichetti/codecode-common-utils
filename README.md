@@ -1,6 +1,6 @@
-# Common::Utils
+# CodeCode::Common::Utils
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/common/utils`. To experiment with that code, run `bin/console` for an interactive prompt.
+Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/codecode/common/utils`. To experiment with that code, run `bin/console` for an interactive prompt.
 
 TODO: Delete this and the text above, and describe your gem
 
@@ -9,7 +9,7 @@ TODO: Delete this and the text above, and describe your gem
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'common-utils'
+gem 'codecode-common-utils'
 ```
 
 And then execute:
@@ -18,11 +18,36 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install common-utils
+    $ gem install codecode-common-utils
 
 ## Usage
+```ruby
+require 'codecode-common-utils'
 
-TODO: Write usage instructions here
+# Create a whatever object
+ object = {
+        'first_key' => 'first_value',
+        'second_key' => 'second_value',
+        'third_key' => 'third_value'
+    }
+
+# Create a whatever nested object
+    other_object = {
+        'first_key' => 'string',
+        'second_key' =>  2.0,
+        'third_key' => 5,
+        'fourth_key' => :test
+    }
+
+# Include nested object inside of a main object
+    100.times do |n|
+      object["nested object #{n}"] = other_object
+    end
+
+# Take a look on Result
+    object = CodeCode::Common::Utils::Hash.symbolize_keys object
+
+```
 
 ## Development
 

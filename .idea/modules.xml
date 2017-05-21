@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/common-utils.iml" filepath="$PROJECT_DIR$/.idea/common-utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../codecode-common-utils/.idea/common-utils.iml" filepath="$PROJECT_DIR$/../codecode-common-utils/.idea/common-utils.iml" />
     </modules>
   </component>
 </project>

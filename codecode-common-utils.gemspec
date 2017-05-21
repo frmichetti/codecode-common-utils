@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'common/utils/version'
+require 'codecode/common/utils/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'common-utils'
-  spec.version       = Common::Utils::VERSION
+  spec.name          = 'codecode-codecode-common-utils'
+  spec.version       = CodeCode::Common::Utils::VERSION
   spec.authors       = ['Felipe Rodrigues Michetti']
   spec.email         = ['frmichetti@gmail.com']
 
