@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'codecode/common/utils/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'codecode-codecode-common-utils'
+  spec.name          = 'codecode-common-utils'
   spec.version       = CodeCode::Common::Utils::VERSION
   spec.authors       = ['Felipe Rodrigues Michetti']
   spec.email         = ['frmichetti@gmail.com']
