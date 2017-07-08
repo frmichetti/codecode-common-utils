@@ -17,6 +17,19 @@ module Avski
           }
         end
 
+        # BANG! Convert Hash string keys to symbol keys
+        #
+        # @param [Hash] hash
+        # @return [Hash] The resulting hash with symbolized keys
+        def self.symbolize_keys!(hash)
+          new_hash = hash.inject({}){ |memo, (k, v)|
+            memo[k.to_sym] = v
+            memo[k.to_sym] = symbolize_keys v if v.class.to_s.eql? 'Hash'
+            memo
+          }
+          hash.replace new_hash
+        end
+
         # Removes a key from the hash and return the modified hash
         #
         # @param [Hash] hash
