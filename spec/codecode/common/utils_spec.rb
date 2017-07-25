@@ -157,6 +157,12 @@ RSpec.describe CodeCode::Common::Utils do
     array_of_hashs = CodeCode::Common::Utils::Hash.symbolize_keys_of_hashs array_of_hashs
 
     array_of_hashs
+
+    array_of_hashs.each{ |hash|
+      hash.each{ |key, value|
+        expect(key).to be_an_instance_of(Symbol)
+      }
+    }
   end
 
   it "should test Bang symbolize array of hash's" do
@@ -176,6 +182,12 @@ RSpec.describe CodeCode::Common::Utils do
     CodeCode::Common::Utils::Hash.symbolize_keys_of_hashs! array_of_hashs
 
     array_of_hashs
+
+    array_of_hashs.each{ |hash|
+      hash.each{ |key, value|
+        expect(key).to be_an_instance_of(Symbol)
+      }
+    }
   end
 
 end
