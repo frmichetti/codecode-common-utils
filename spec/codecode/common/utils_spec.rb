@@ -1,5 +1,8 @@
 require 'spec_helper'
 
+include CodeCode::Common::Utils::Hash
+include CodeCode::Common::Utils::Validation
+
 RSpec.describe CodeCode::Common::Utils do
 
   it 'has a version number' do
@@ -15,7 +18,7 @@ RSpec.describe CodeCode::Common::Utils do
         'third_key' => 'third_value'
     }
 
-    object = CodeCode::Common::Utils::Hash.symbolize_keys object
+    object = Hash.symbolize_keys object
     object.each{ |key, value|
       expect(key).to be_an_instance_of(Symbol)
       expect(value).to be_an_instance_of(String)
@@ -39,7 +42,7 @@ RSpec.describe CodeCode::Common::Utils do
 
     100.times {|n| object["nested object #{n}"] = other_object}
 
-    object = CodeCode::Common::Utils::Hash.symbolize_keys object
+    object = Hash.symbolize_keys object
     object.each{ |key, value|
       expect(key).to be_an_instance_of(Symbol)
     }
@@ -61,7 +64,7 @@ RSpec.describe CodeCode::Common::Utils do
 
     100.times {|n| object["nested object #{n}"] = other_object}
 
-    CodeCode::Common::Utils::Hash.symbolize_keys! object
+    Hash.symbolize_keys! object
 
     object.each{ |key, value|
       expect(key).to be_an_instance_of(Symbol)
@@ -85,7 +88,7 @@ RSpec.describe CodeCode::Common::Utils do
 
     100.times {|n| object["nested object #{n}"] = other_object}
 
-    CodeCode::Common::Utils::Hash.symbolize_keys object
+    Hash.symbolize_keys object
 
     object.each{ |key, value|
       expect(key).not_to be_an_instance_of(Symbol)
@@ -101,7 +104,7 @@ RSpec.describe CodeCode::Common::Utils do
         'third_key' => 'third_value'
     }
 
-    CodeCode::Common::Utils::Hash.symbolize_keys! object
+    Hash.symbolize_keys! object
 
     required_fields = [:first_key,:second_key,:fourth_key]
 
@@ -116,7 +119,7 @@ RSpec.describe CodeCode::Common::Utils do
         'third_key' => ''
     }
 
-    CodeCode::Common::Utils::Hash.symbolize_keys! object
+    Hash.symbolize_keys! object
 
     required_fields = [:first_key,:second_key,:third_key]
 
@@ -132,7 +135,7 @@ RSpec.describe CodeCode::Common::Utils do
         'third_key' => nil
     }
 
-    CodeCode::Common::Utils::Hash.symbolize_keys! object
+    Hash.symbolize_keys! object
 
     required_fields = [:first_key,:second_key,:third_key]
 
@@ -154,7 +157,7 @@ RSpec.describe CodeCode::Common::Utils do
       array_of_hashs << object.clone
     }
 
-    array_of_hashs = CodeCode::Common::Utils::Hash.symbolize_keys_of_hashs array_of_hashs
+    array_of_hashs = Hash.symbolize_keys_of_hashs array_of_hashs
 
     array_of_hashs
 
@@ -179,7 +182,7 @@ RSpec.describe CodeCode::Common::Utils do
       array_of_hashs << object.clone
     }
 
-    CodeCode::Common::Utils::Hash.symbolize_keys_of_hashs! array_of_hashs
+    Hash.symbolize_keys_of_hashs! array_of_hashs
 
     array_of_hashs
 
@@ -190,4 +193,81 @@ RSpec.describe CodeCode::Common::Utils do
     }
   end
 
+  it 'should test a recursive symbolize method' do
+
+    object = {
+        'first_key' => nil,
+        'second_key' => 'xxx',
+        'third_key' => nil
+    }
+
+    array_of_hashs = []
+
+    10.times{
+      array_of_hashs << object.clone
+    }
+
+    nested_object = {
+        'first_key' => nil,
+        'second_key' => 'xxx',
+        'third_key' => nil
+    }
+
+    object[:nested_objects] = []
+
+    3.times{
+      object[:nested_objects] << nested_object.clone
+    }
+
+    object[:nested_object] = nested_object.clone
+    object[:hash_array] = array_of_hashs
+
+    object = Hash.recursive_key_symbolizer object
+
+    object[:hash_array].each{ |hash|
+      hash.each{ |key, value|
+        expect(key).to be_an_instance_of(Symbol)
+      }
+    }
+  end
+
+  it 'should test a BANG recursive symbolize method' do
+
+    object = {
+        'first_key' => nil,
+        'second_key' => 'xxx',
+        'third_key' => nil
+    }
+
+    array_of_hashs = []
+
+    10.times{
+      array_of_hashs << object.clone
+    }
+
+    nested_object = {
+        'first_key' => nil,
+        'second_key' => 'xxx',
+        'third_key' => nil
+    }
+
+    object[:nested_objects] = []
+
+    3.times{
+      object[:nested_objects] << nested_object.clone
+    }
+
+    object[:nested_object] = nested_object.clone
+    object[:hash_array] = array_of_hashs
+
+    Hash.recursive_key_symbolizer! object
+
+    object[:hash_array].each{ |hash|
+      hash.each{ |key, value|
+        expect(key).to be_an_instance_of(Symbol)
+      }
+    }
+  end
 end
+
+

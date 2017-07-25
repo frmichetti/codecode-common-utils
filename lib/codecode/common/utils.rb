@@ -13,10 +13,14 @@ module CodeCode
         #
         # @param [Hash] hash
         # @return [Hash] The resulting hash with symbolized keys
-        def self.symbolize_keys(hash)
+        def symbolize_keys(hash)
           hash.inject({}){ |memo, (k, v)|
             memo[k.to_sym] = v
-            memo[k.to_sym] = symbolize_keys v if v.class.eql? ::Hash
+            if v.class.eql? ::Hash
+              memo[k.to_sym] = symbolize_keys v
+            elsif v.class.eql? ::Array
+              memo[k.to_sym] = symbolize_keys_of_hashs v
+            end
             memo
           }
         end
@@ -25,10 +29,14 @@ module CodeCode
         #
         # @param [Hash] hash
         # @return [Hash] The resulting hash with symbolized keys
-        def self.symbolize_keys!(hash)
+        def symbolize_keys!(hash)
           new_hash = hash.inject({}){ |memo, (k, v)|
             memo[k.to_sym] = v
-            memo[k.to_sym] = symbolize_keys! v if v.class.eql? ::Hash
+            if v.class.eql? ::Hash
+              memo[k.to_sym] = symbolize_keys! v
+            elsif v.class.eql? ::Array
+              memo[k.to_sym] = symbolize_keys_of_hashs! v
+            end
             memo
           }
           hash.replace new_hash
@@ -37,15 +45,31 @@ module CodeCode
         # Convert Hash Array with string keys to symbol keys
         # @param [Object] array_of_hashs Array of String Hash
         # @return [Object] Array of Symbol Hash
-        def self.symbolize_keys_of_hashs(array_of_hashs)
+        def symbolize_keys_of_hashs(array_of_hashs)
           array_of_hashs.collect{|hash| symbolize_keys(hash)}
         end
 
         # BANG! Convert Hash Array with string keys to symbol keys
         # @param [Object] array_of_hashs Array of String Hash
         # @return [Object] Array of Symbol Hash
-        def self.symbolize_keys_of_hashs!(array_of_hashs)
+        def symbolize_keys_of_hashs!(array_of_hashs)
           array_of_hashs.collect!{|hash| symbolize_keys(hash)}
+        end
+
+        def recursive_key_symbolizer!(object)
+          if object.class.eql? ::Array
+            symbolize_keys_of_hashs! object
+          elsif object.class.eql? ::Hash
+            symbolize_keys! object
+          end
+        end
+
+        def recursive_key_symbolizer(object)
+          if object.class.eql? ::Array
+            symbolize_keys_of_hashs object
+          elsif object.class.eql? ::Hash
+            symbolize_keys object
+          end
         end
 
         # Removes a key from the hash and return the modified hash
@@ -53,7 +77,7 @@ module CodeCode
         # @param [Hash] hash
         # @param [Symbol] key
         # @return [Hash] The given hash without the removed key
-        def self.except(hash, key)
+        def except(hash, key)
           hash.delete(key)
         end
 
@@ -62,7 +86,7 @@ module CodeCode
         # @param [Hash] hash
         # @param [Array] keys
         # @return [Hash]
-        def self.select(hash, keys)
+        def select(hash, keys)
           hash.select { |k, v| keys.include?(k) }
         end
       end
@@ -74,7 +98,7 @@ module CodeCode
         # empty or keys are missing
         # @param [Array[Symbol]] required_fields array of symbols
         # @param [Object] params
-        def self.check_fields(required_fields, params)
+        def check_fields(required_fields, params)
           required_fields, missing, empty, null = required_fields, [], [], []
           required_fields.each { |key|
             missing.push(key) unless params.keys.include?(key)
