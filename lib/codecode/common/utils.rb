@@ -28,10 +28,24 @@ module CodeCode
         def self.symbolize_keys!(hash)
           new_hash = hash.inject({}){ |memo, (k, v)|
             memo[k.to_sym] = v
-            memo[k.to_sym] = symbolize_keys v if v.class.eql? ::Hash
+            memo[k.to_sym] = symbolize_keys! v if v.class.eql? ::Hash
             memo
           }
           hash.replace new_hash
+        end
+
+        # Convert Hash Array with string keys to symbol keys
+        # @param [Object] array_of_hashs Array of String Hash
+        # @return [Object] Array of Symbol Hash
+        def self.symbolize_keys_of_hashs(array_of_hashs)
+          array_of_hashs.collect{|hash| symbolize_keys(hash)}
+        end
+
+        # BANG! Convert Hash Array with string keys to symbol keys
+        # @param [Object] array_of_hashs Array of String Hash
+        # @return [Object] Array of Symbol Hash
+        def self.symbolize_keys_of_hashs!(array_of_hashs)
+          array_of_hashs.collect!{|hash| symbolize_keys(hash)}
         end
 
         # Removes a key from the hash and return the modified hash

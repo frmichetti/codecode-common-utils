@@ -4,7 +4,7 @@ RSpec.describe CodeCode::Common::Utils do
 
   it 'has a version number' do
     expect(CodeCode::Common::Utils::VERSION).not_to be nil
-    expect(CodeCode::Common::Utils::VERSION).to eq '0.1.4'
+    expect(CodeCode::Common::Utils::VERSION).to eq '0.1.5'
   end
 
   it 'should convert object with string keys to symbol keys - first level' do
@@ -137,6 +137,45 @@ RSpec.describe CodeCode::Common::Utils do
     required_fields = [:first_key,:second_key,:third_key]
 
    expect{CodeCode::Common::Utils::Validation.check_fields(required_fields, object)}.to raise_exception(NullFieldException)
+  end
+
+
+  it "should test symbolize array of hash's" do
+
+    object = {
+        'first_key' => nil,
+        'second_key' => 'xxx',
+        'third_key' => nil
+    }
+
+    array_of_hashs = []
+
+    100.times{
+      array_of_hashs << object.clone
+    }
+
+    array_of_hashs = CodeCode::Common::Utils::Hash.symbolize_keys_of_hashs array_of_hashs
+
+    array_of_hashs
+  end
+
+  it "should test Bang symbolize array of hash's" do
+
+    object = {
+        'first_key' => nil,
+        'second_key' => 'xxx',
+        'third_key' => nil
+    }
+
+    array_of_hashs = []
+
+    100.times{
+      array_of_hashs << object.clone
+    }
+
+    CodeCode::Common::Utils::Hash.symbolize_keys_of_hashs! array_of_hashs
+
+    array_of_hashs
   end
 
 end
